@@ -1,17 +1,10 @@
 import Navbar from '@/components/Navbar'
-import React, { FC } from 'react'
 
-interface layoutProps {
-  
-}
-
-const layout = ({children}: {children: React.ReactNode}) => {
-  return( 
+export default function AppLayout({ children }: { children: React.ReactNode }) {
+  return (
     <>
-        <Navbar />
-        {children}
+      <Navbar />
+      <main className="h-full">{children}</main>
     </>
   )
 }
-
-export default layout

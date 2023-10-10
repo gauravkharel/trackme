@@ -1,17 +1,5 @@
-import Navbar from '@/components/Navbar'
-import { FC } from 'react'
+import { redirect } from 'next/navigation'
 
-interface pageProps {
-  
+export default function Home() {
+  redirect('/track')
 }
-
-const page: FC<pageProps> = ({}) => {
-  return (
-    <>
-      <Navbar />
-      <main className=''>Main Page</main>
-    </>
-  )
-}
-
-export default page
