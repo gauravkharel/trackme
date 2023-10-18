@@ -4,6 +4,9 @@ import { getUserSession } from "@/lib/auth"
 import { prisma } from "@/lib/prisma"
 import { Activity } from "@prisma/client"
 import { revalidatePath } from "next/cache"
+import ActivityDuration from "./duration"
+import { Pause, Play, Square } from "lucide-react"
+import { cn } from "@/lib/utils"
 
 type TimeProps = {
   startAt: string
@@ -51,24 +54,28 @@ const NewActivity = ({ activity }: NewActivityProps) => {
 
   return (
     <div>
-      <h2>What are you working on?</h2>
+      <h2 className="font-semibold mb-2">What are you working on?</h2>
       <form
         action={activity ? stopActivity : startActivity}
         className="flex items-center space-x-4"
       >
-        <Input type="text" name="name" defaultValue={activity?.name || ''} />
-        <input type="hidden" name="id" defaultValue={activity?.id || ''} />
-        {activity && <Time startAt={activity.startAt.toString()} />}
-        <Button type="submit">{activity ? 'Stop' : 'Start'}</Button>
+        <div>
+          <Input type="text" name="name" defaultValue={activity?.name || ''} />
+          <input type="hidden" name="id" defaultValue={activity?.id || ''} />
+          {activity && <ActivityDuration startAt={activity.startAt} />}
+          <Button type="submit"
+            variant="outline"
+            className={cn('rounded-full px-2 h-[40px] w-[40px]')} >{activity ? <Square size={20} /> : <Play size={20} />}</Button>
+        </div>
       </form>
     </div>
   )
 }
 
-const DailyActivities = () => {}
+const DailyActivities = () => { }
 
 
-export default async function page(){
+export default async function page() {
   const user = await getUserSession()
   const currentActivity = await prisma.activity.findFirst({
     where: {
